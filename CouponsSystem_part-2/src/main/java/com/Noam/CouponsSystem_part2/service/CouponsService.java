@@ -33,25 +33,29 @@ public class CouponsService {
 	public Coupon getOneCoupon(int id) {
 		return repo.getOne(id);
 	}
-	
-	public void deleteById(int id) {
+
+	public void deleteCouponById(int id) {
 		repo.deleteById(id);
 	}
 
-//	public List<Coupon> getAllCouponsByCompanyId(int companyID){
-//		return repo.findById(companyID);
-//	}
+	public List<Coupon> getAllCouponsByCompanyId(int companyID) {
+		return repo.findByCompanyID(companyID);
+	}
+	
+	public List<Coupon> getAllCouponsByCustomerId(int customerID) {
+		return repo.findByCustomerID(customerID);
+	}
 
-//	public List<Coupon> getAllCouponsByCustomerId(int customerID) {
-//		return repo.findById(customerID);
+//	public void deleteCouponPurchaseByCouponID(int couponID) {
+//		repo.deleteCouponPurchaseByCouponID(couponID);
 //	}
-
-//	public void addCouponPurchase(int customerID, int couponID) {
-//	
-//	}
-
+//
+	public void addCouponPurchase(int customerID, int couponID) {
+		repo.addCouponPurchase(customerID, couponID);
+	}
+//
 //	public void deleteCouponPurchase(int customerID, int couponID) {
-//		
+//		repo.deleteCouponPurchase(customerID, couponID);
 //	}
 
 }

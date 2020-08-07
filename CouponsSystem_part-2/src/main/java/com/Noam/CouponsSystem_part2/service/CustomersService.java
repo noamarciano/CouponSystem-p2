@@ -34,7 +34,7 @@ public class CustomersService {
 		return repo.getOne(id);
 	}
 
-//	boolean isCustomerExist(String email, String password) {
-//		return repo.exists(email, password);
-//	}
+	public boolean findByEmailAndPassword(String email, String password) {
+		return (repo.findByEmailAndPassword(email, password) != null);
+	}
 }

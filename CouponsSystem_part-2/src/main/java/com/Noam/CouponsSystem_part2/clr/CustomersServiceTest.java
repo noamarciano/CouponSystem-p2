@@ -15,7 +15,7 @@ public class CustomersServiceTest implements CommandLineRunner {
 
 	@Autowired
 	CustomersService customersService;
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -46,8 +46,8 @@ public class CustomersServiceTest implements CommandLineRunner {
 		customersService.addCustomer(cu3);
 		CheckTitle.printCustomersTable(customersService.getAllCustomers());
 
-////			CheckTitle.printTestLine("check if customer exist");// Should return true
-////			System.out.println(customersDBDAO.isCustomerExists("koby@gmail.com", "1234"));
+		CheckTitle.printTestLine("check if customer exist");// Should return true
+		System.out.println(customersService.findByEmailAndPassword("koby@gmail.com", "1234"));
 ////
 ////			CheckTitle.printTestLine("!WRONG! check if customer exist");//// Should return false
 ////			System.out.println(customersDBDAO.isCustomerExists("koby@gmail.com", "1111"));

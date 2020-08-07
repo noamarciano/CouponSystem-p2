@@ -34,8 +34,8 @@ public class CompaniesService {
 		return repo.getOne(id);
 	}
 
-	public boolean findByEmailAndPassword(String email, String password) {
-		return (repo.findByEmailAndPassword(email, password)!=null);
+	public boolean isCompanyExist(String email, String password) {
+		return (repo.findByEmailAndPassword(email, password)!= null);
 	}
 
 }

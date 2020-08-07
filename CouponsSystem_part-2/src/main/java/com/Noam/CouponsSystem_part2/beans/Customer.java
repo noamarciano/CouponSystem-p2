@@ -37,9 +37,5 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Coupon> coupons = new ArrayList<>();
 	
-//	public Customer addCouponPurchaseCustomer(Coupon coupon) {//Change the document
-//		this.coupons.add(coupon);
-//		return this;
-//	}
 	
 }
