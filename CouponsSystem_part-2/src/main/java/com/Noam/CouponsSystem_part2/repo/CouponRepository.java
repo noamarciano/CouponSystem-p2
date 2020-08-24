@@ -14,17 +14,27 @@ import com.Noam.CouponsSystem_part2.beans.Coupon;
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
 	List<Coupon> findByCompanyID(int companyID);
-
+	
 	public void deleteById(int id);
 
-	@Transactional
-	@Modifying
-	@Query(value = "SELECT * from `coupon_system_2`.`customers_coupons` WHERE `customer_id`=:`customerID`", nativeQuery = true)
-	List<Coupon> findByCustomerID(@Param("customer_id") int customerID);
+//	@Transactional
+//	@Modifying
+//	@Query(value = "from `coupon_system_2`.`customers_coupons` where `customer_id`=:`customer_id`;", nativeQuery = true)
+//	List<Coupon> findByCustomerID(@Param("customer_id") int customerID);
+	
+//	@Query(value = " from customers_coupons where customer_id =:customer_id")
+//	public List<Coupon> findByCustomerID(@Param("customer_id")int customer_id );
+	
+	
+	//
+//	@Transactional
+//	@Modifying
+//	@Query(value = "SELECT * FROM `coupon_system_2`.`customers_coupons` WHERE `customer_id` = ?", nativeQuery = true)
+//	List<Coupon> findByCustomerID(@Param("customer_id") int customerID);
 
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO `coupon_system_2`.`customers_coupons` (`customer_id`, `coupons_id`) VALUES (:`customerID`, :`couponID`)", nativeQuery = true)
+	@Query(value = "INSERT INTO `coupon_system_2`.`customers_coupons` (`customer_id`, `coupons_id`) VALUES (?, ?);", nativeQuery = true)
 	void addCouponPurchase(@Param("customer_id") int customerID, @Param("coupons_id") int couponID);
 //
 //	@Transactional

@@ -9,6 +9,9 @@ import com.Noam.CouponsSystem_part2.beans.Company;
 import com.Noam.CouponsSystem_part2.beans.Customer;
 import com.Noam.CouponsSystem_part2.exceptions.AlreadyExistException;
 import com.Noam.CouponsSystem_part2.exceptions.CannotUpdateException;
+import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
+import com.Noam.CouponsSystem_part2.security.ClientType;
+import com.Noam.CouponsSystem_part2.security.LoginManager;
 import com.Noam.CouponsSystem_part2.service.AdminFacade;
 import com.Noam.CouponsSystem_part2.utils.CheckTitle;
 
@@ -18,47 +21,55 @@ public class AdminFacadeTest implements CommandLineRunner {
 
 	@Autowired
 	AdminFacade adminFacade;
+	
+	@Autowired
+	LoginManager loginManager;
 
 	@Override
 	public void run(String... args) throws Exception {
 
 		CheckTitle.adminFacadeCheck();
+		
 
-//		CheckTitle.printTestLine("Admin Facade - Real login test");
-//		try {
-//			adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin",
-//					ClientType.Administrator);
-//		} catch (LoginDeniedException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
-//		CheckTitle.printTestLine("Admin Facade - !WRONG! login test");
-//		try {
-//			adminFacade = (AdminFacade) LoginManager.getInstance().login("admin111@admin.com", "admin111",
-//					ClientType.Administrator);
-//		} catch (LoginDeniedException e) {
-//			System.out.println(e.getMessage());
-//		}
+		CheckTitle.printTestLine("Admin Facade - !WRONG! login test");
+		try {
+			loginManager.login("admin111@admin.com", "admin111", ClientType.Administrator);
+		} catch (LoginDeniedException e) {
+			System.out.println(e.getMessage());
+		}
+
+		CheckTitle.printTestLine("Admin Facade - Real login test");
+		try {
+			loginManager.login("admin@admin.com", "admin", ClientType.Administrator);
+		} catch (LoginDeniedException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
 
 		CheckTitle.printTestLine("Admin Facade - add companies");
-		Company c4 = new Company();
-		c4.setName("Hilton");
-		c4.setEmail("hilton@company.com");
-		c4.setPassword("1234");
-
-		Company c5 = new Company();
-		c5.setName("Herodes");
-		c5.setEmail("herodes@company.com");
-		c5.setPassword("1234");
 
 		try {
-			adminFacade.addCompany(c4);
-			adminFacade.addCompany(c5);
+
+			Company c1 = new Company();
+			c1.setName("Hilton");
+			c1.setEmail("hilton@company.com");
+			c1.setPassword("1234");
+
+			Company c2 = new Company();
+			c2.setName("Herodes");
+			c2.setEmail("herodes@company.com");
+			c2.setPassword("1234");
+			
+
+			adminFacade.addCompany(c1);
+			adminFacade.addCompany(c2);
+			CheckTitle.printCompaniesTable(adminFacade.getAllCompanies());
+
 		} catch (AlreadyExistException e) {
 			System.out.println(e.getMessage());
 		}
 
-		CheckTitle.printCompaniesTable(adminFacade.getAllCompanies());
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! add companies");
 		Company c6 = new Company();
@@ -91,7 +102,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 			System.out.println(e2.getMessage());
 		}
 		CheckTitle.printOneCompany(adminFacade.getOneCompany(4));
-//		CheckTitle.printCompaniesTable(adminFacade.getAllCompanies());
+
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! update company");
 		try {
@@ -167,7 +178,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 		CheckTitle.printCustomersTable(adminFacade.getAllCustomers());
 
 		CheckTitle.printTestLine("Admin Facade - get one company");
-		CheckTitle.printOneCompany(adminFacade.getOneCompany(2));
+		CheckTitle.printOneCompany(adminFacade.getOneCompany(4));
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! get one company");
 //		CheckTitle.printOneCompany(adminFacade.getOneCompany(9));//TODO need to fix the wrong

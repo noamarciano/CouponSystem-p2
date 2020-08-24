@@ -13,43 +13,44 @@ import com.Noam.CouponsSystem_part2.service.CustomerFacade;
 public class LoginManager {
 
 	@Autowired
-	private static ClientFacade clientFacade;
+	private AdminFacade adminFacade;
 
-	public static ClientFacade login(String email, String password, ClientType clientType) throws LoginDeniedException {
+	@Autowired
+	private CompanyFacade companyFacade;
+
+	@Autowired
+	private CustomerFacade customerFacade;
+
+	public ClientFacade login(String email, String password, ClientType clientType) throws LoginDeniedException {
 
 		switch (clientType) {
 		case Administrator:
-			clientFacade = new AdminFacade();
-			if (clientFacade.login(email, password)) {
+			if (adminFacade.login(email, password)) {
 				System.out.println("Admin Facade - Login successful");
-				return clientFacade;
+				return adminFacade;
 			} else {
 				return null;
 			}
 		case Company:
-			clientFacade = new CompanyFacade();
-			if (clientFacade.login(email, password)) {
+
+			if (companyFacade.login(email, password)) {
 				System.out.println("Company Facade - Login successful");
-				return clientFacade;
+				return companyFacade;
 			} else {
 				return null;
 			}
 
 		case Customer:
-			clientFacade = new CustomerFacade();
-			if (clientFacade.login(email, password)) {
+			if (customerFacade.login(email, password)) {
 				System.out.println("Cuatomer Facade - Login successful");
-				return clientFacade;
+				return customerFacade;
 			} else {
 				return null;
 			}
 		default:
-			clientFacade = null;
 			System.out.println("One or more details are wrong, please try again..");
-			break;
+			return null;
 		}
-		return null;
-
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.Noam.CouponsSystem_part2.clr;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.Noam.CouponsSystem_part2.beans.Category;
 import com.Noam.CouponsSystem_part2.beans.Coupon;
+import com.Noam.CouponsSystem_part2.beans.Customer;
 import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 import com.Noam.CouponsSystem_part2.exceptions.PurchasedCouponException;
 import com.Noam.CouponsSystem_part2.security.ClientType;
@@ -26,6 +29,9 @@ public class CustomerFacadeTest implements CommandLineRunner {
 	@Autowired
 	CouponsService couponsService;
 	
+	@Autowired
+	LoginManager loginManager;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		CheckTitle.customerFacadeCheck();
@@ -38,14 +44,15 @@ public class CustomerFacadeTest implements CommandLineRunner {
 //			System.out.println(e.getMessage());
 //		}
 //
-//		CheckTitle.printTestLine("Customer Facade - Real login test");
-//		try {
-//			customerFacade = (CustomerFacade) LoginManager.login("dana@gmail.com", "1234",
-//					ClientType.Customer);
-//		} catch (LoginDeniedException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		customerFacade.setCustomerID(3);
+		CheckTitle.printTestLine("Customer Facade - Real login test");
+		CustomerFacade danaCustomer = null;
+		try {
+
+			danaCustomer = (CustomerFacade) loginManager.login("dana@gmail.com", "1234",ClientType.Customer);
+		} catch (LoginDeniedException e) {
+			System.out.println(e.getMessage());
+		}
+		danaCustomer.setCustomerID(3);
 
 		CheckTitle.printTestLine("Customer Facade - purchase coupon");
 
@@ -53,17 +60,18 @@ public class CustomerFacadeTest implements CommandLineRunner {
 			Coupon coupon = couponsService.getOneCoupon(5);
 			CheckTitle.printOneCoupon(coupon);
 			customerFacade.purchaseCoupon(coupon);
+			
 		} catch (PurchasedCouponException e) {
 			System.out.println(e.getMessage());
 		}
-
-		CheckTitle.printCouponsTable(customerFacade.getCustomerCoupons());
-
+		//3
+		Optional<Customer> customer = customerFacade.getCustomerDetails();
+		CheckTitle.printCouponsTable(customer.get().getCoupons());
+		
 		CheckTitle.printTestLine("Customer Facade - !WRONG! purchase coupon");
 
-		Coupon coupon2 = couponsService.getOneCoupon(10);
-
 		try {
+			Coupon coupon2 = couponsService.getOneCoupon(5);
 			customerFacade.purchaseCoupon(coupon2);
 		} catch (PurchasedCouponException e) {
 			System.out.println(e.getMessage());
@@ -98,6 +106,5 @@ public class CustomerFacadeTest implements CommandLineRunner {
 		
 	}
 
-	
 	
 }

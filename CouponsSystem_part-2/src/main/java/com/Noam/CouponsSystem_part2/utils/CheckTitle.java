@@ -1,6 +1,7 @@
 package com.Noam.CouponsSystem_part2.utils;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.Noam.CouponsSystem_part2.beans.Company;
 import com.Noam.CouponsSystem_part2.beans.Coupon;
@@ -154,14 +155,14 @@ public class CheckTitle {
 		}
 	}
 
-	public static void printOneCustomer(Customer customer) {
+	public static void printOneCustomer(Optional<Customer> optional) {
 		System.out.println();
-		if (customer != null) {
+		if (optional != null) {
 			System.out.printf("%10s %10s %10s %20s %10s %10s", "id", "first", "last", "email", "password", "coupons");
 			System.out.println();
 			CheckTitle.sepLine();
-			System.out.printf("%10s %10s %10s %20s %10s %10s", (customer).getId(), (customer).getFirstName(),
-					(customer).getLastName(), (customer).getEmail(), (customer).getPassword(), (customer).getCoupons());
+			System.out.printf("%10s %10s %10s %20s %10s %10s", (optional).get().getId(), (optional).get().getFirstName(),
+					(optional).get().getLastName(), (optional).get().getEmail(), (optional).get().getPassword(), (optional).get().getCoupons());
 			System.out.println();
 		}
 	}

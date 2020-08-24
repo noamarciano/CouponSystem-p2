@@ -1,6 +1,7 @@
 package com.Noam.CouponsSystem_part2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class AdminFacade extends ClientFacade {
 	}
 
 	public void addCompany(Company company) throws AlreadyExistException {
+
 		List<Company> companies = companiesService.getAllCompanies();
 		for (Company c : companies) {
 			if (c.getEmail().equals(company.getEmail()) || c.getName().equals(company.getName())) {
@@ -78,9 +80,8 @@ public class AdminFacade extends ClientFacade {
 	public Company getOneCompany(int companyID) throws NoSuchThingLikeThisException {
 		if (companiesService.getOneCompany(companyID) != null) {
 			return companiesService.getOneCompany(companyID);
-//		} else {
-//			System.out.println("This company doesn't exist..");
-//		}
+		} else {
+			System.out.println("This company doesn't exist..");
 		}
 		throw new NoSuchThingLikeThisException("Sorry, There is no company with id : " + companyID);
 	}
@@ -114,7 +115,7 @@ public class AdminFacade extends ClientFacade {
 		return customersService.getAllCustomers();
 	}
 
-	public Customer getOneCustomer(int customerID) {
+	public Optional<Customer> getOneCustomer(int customerID) {
 		if (customersService.getOneCustomer(customerID) != null) {
 			return customersService.getOneCustomer(customerID);
 		} else {

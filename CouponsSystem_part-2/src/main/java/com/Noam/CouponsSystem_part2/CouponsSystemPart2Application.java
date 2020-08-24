@@ -8,7 +8,7 @@ public class CouponsSystemPart2Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CouponsSystemPart2Application.class, args);
-		System.out.println("END");
+		System.out.println("Server is running..");
 	}
 
 }

@@ -27,26 +27,32 @@ public class CompanyFacadeTest implements CommandLineRunner {
 	@Autowired
 	CouponsService couponsService;
 
+	@Autowired
+	LoginManager loginManager;
+
 	@Override
 	public void run(String... args) throws Exception {
 
 		CheckTitle.companyFacadeCheck();
 
-//		CheckTitle.printTestLine("Company Facade - Real login test");
-//		try {
-//			companyFacade = (CompanyFacade) LoginManager.login("burgerking@company.com", "1234", ClientType.Company);
-//		} catch (LoginDeniedException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		
-//		companyFacade.setCompanyID(3);
-//
 //		CheckTitle.printTestLine("Company Facade - !WRONG! login test");
 //		try {
-//			companyFacade = (CompanyFacade) LoginManager.login("burger@company.com", "1234", ClientType.Company);
+//			loginManager.login("burger@company.com", "1234", ClientType.Company);
 //		} catch (LoginDeniedException e) {
 //			System.out.println(e.getMessage());
 //		}
+//
+		CheckTitle.printTestLine("Company Facade - Real login test");
+		CompanyFacade burgerKingCompany = null;
+		try {
+			burgerKingCompany = (CompanyFacade) loginManager.login("burgerking@company.com", "1234",
+					ClientType.Company);
+		} catch (LoginDeniedException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		burgerKingCompany.setCompanyID(3);
+		
 
 		CheckTitle.printTestLine("Company Facade - add coupons");
 

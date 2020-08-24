@@ -13,6 +13,7 @@ public class CouponsService {
 
 	@Autowired
 	private CouponRepository repo;
+	
 
 	public void addCoupon(Coupon coupon) {
 		repo.save(coupon);
@@ -40,10 +41,6 @@ public class CouponsService {
 
 	public List<Coupon> getAllCouponsByCompanyId(int companyID) {
 		return repo.findByCompanyID(companyID);
-	}
-	
-	public List<Coupon> getAllCouponsByCustomerId(int customerID) {
-		return repo.findByCustomerID(customerID);
 	}
 
 //	public void deleteCouponPurchaseByCouponID(int couponID) {

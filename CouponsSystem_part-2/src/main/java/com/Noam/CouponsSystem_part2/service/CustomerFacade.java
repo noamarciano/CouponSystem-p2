@@ -3,6 +3,7 @@ package com.Noam.CouponsSystem_part2.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.Noam.CouponsSystem_part2.beans.Coupon;
 import com.Noam.CouponsSystem_part2.beans.Customer;
 import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 import com.Noam.CouponsSystem_part2.exceptions.PurchasedCouponException;
+import com.Noam.CouponsSystem_part2.repo.CustomerRepository;
 
 @Service
 public class CustomerFacade extends ClientFacade {
@@ -31,9 +33,12 @@ public class CustomerFacade extends ClientFacade {
 	@Autowired
 	private CouponsService couponsService;
 
+	@Autowired
+	private CustomerRepository customerRepository;
+
 	@Override
 	public boolean login(String email, String password) throws LoginDeniedException {
-		if (customersService.findByEmailAndPassword(email, password)) {
+		if (customersService.isCustomerExist(email, password) != null) {
 			return true;
 		}
 		throw new LoginDeniedException("Sorry, Login denied..");
@@ -48,7 +53,8 @@ public class CustomerFacade extends ClientFacade {
 		}
 
 		// You can't purchase coupon more than once
-		List<Coupon> coupons = getCustomerCoupons();
+		Optional<Customer> customer = customersService.getOneCustomer(customerID);
+		List<Coupon> coupons = customer.get().getCoupons();
 		if (coupons != null) {
 			for (Coupon c : coupons) {
 				if (coupon.getId() == c.getId()) {
@@ -76,21 +82,22 @@ public class CustomerFacade extends ClientFacade {
 	}
 
 	public List<Coupon> getCustomerCoupons() {
-		if (couponsService.getAllCouponsByCustomerId(customerID) != null) {
-			return couponsService.getAllCouponsByCustomerId(customerID);
-		} else {
+		Optional<Customer> customer = customersService.getOneCustomer(customerID);
+		List<Coupon> coupons = customer.get().getCoupons();
+		if (coupons == null) {
 			System.out.println("This customer doesn't have coupons..");
+			return null;
 		}
-		return null;
+		return coupons;
 	}
 
 	public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) {// TODO need to throw exception + maxPrice
 																				// + ID
 
-		List<Coupon> coupons = new ArrayList<>();
 		List<Coupon> couponsByCategory = new ArrayList<>();
 		try {
-			coupons = couponsService.getAllCouponsByCustomerId(customerID);
+			Optional<Customer> customer = customersService.getOneCustomer(customerID);
+			List<Coupon> coupons = customer.get().getCoupons();
 			for (Coupon c : coupons) {
 				if (c.getCategory().equals(category)) {
 					couponsByCategory.add(c);
@@ -104,10 +111,10 @@ public class CustomerFacade extends ClientFacade {
 	}
 
 	public ArrayList<Coupon> getCustomerCouponsByMaxPrice(double maxPrice) {
-		List<Coupon> coupons = new ArrayList<>();
 		List<Coupon> couponsByPrice = new ArrayList<>();
 		try {
-			coupons = couponsService.getAllCouponsByCustomerId(customerID);
+			Optional<Customer> customer = customersService.getOneCustomer(customerID);
+			List<Coupon> coupons = customer.get().getCoupons();
 			for (Coupon c : coupons) {
 				if (c.getPrice() < maxPrice) {
 					couponsByPrice.add(c);
@@ -121,11 +128,11 @@ public class CustomerFacade extends ClientFacade {
 		return null;
 	}
 
-	public Customer getCustomerDetails() {
+	public Optional<Customer> getCustomerDetails() {
 
-		Customer customer = customersService.getOneCustomer(customerID);
+		Optional<Customer> customer = customersService.getOneCustomer(customerID);
 		try {
-			customer.setCoupons(getCustomerCoupons());
+			customer.get().setCoupons(getCustomerCoupons());
 			return customer;
 		} catch (Exception e) {
 			System.out.println("This customer doesn't have coupons..");

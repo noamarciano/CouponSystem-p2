@@ -13,15 +13,13 @@ import com.Noam.CouponsSystem_part2.exceptions.AlreadyExistException;
 import com.Noam.CouponsSystem_part2.exceptions.CannotUpdateException;
 import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 
+import lombok.Setter;
 
 @Service
 public class CompanyFacade extends ClientFacade {
 
+	@Setter
 	private int companyID;
-
-	public void setCompanyID(int companyID) {
-		this.companyID = companyID;
-	}
 
 	@Autowired
 	private CompaniesService companiesService;
@@ -34,10 +32,10 @@ public class CompanyFacade extends ClientFacade {
 
 	@Override
 	public boolean login(String email, String password) throws LoginDeniedException {
-		if (companiesService.isCompanyExist(email, password)) {
+		if (companiesService.isCompanyExist(email, password) != null) {
 			return true;
 		}
-		throw new LoginDeniedException("Sorry, Login denied..");
+		throw new LoginDeniedException("Sorry, One or two things are wrong..");
 	}
 
 	public void addCoupon(Coupon coupon) throws AlreadyExistException {

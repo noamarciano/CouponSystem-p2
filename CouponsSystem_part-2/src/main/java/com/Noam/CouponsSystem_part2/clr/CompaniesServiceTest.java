@@ -42,8 +42,8 @@ public class CompaniesServiceTest implements CommandLineRunner {
 		companiesService.addCompany(c3);
 		CheckTitle.printCompaniesTable(companiesService.getAllCompanies());
 
-		CheckTitle.printTestLine("check if company exist");//// Should return true
-		System.out.println(companiesService.isCompanyExist("osem@company.com", "1234"));
+//		CheckTitle.printTestLine("check if company exist");//// Should return true
+//		System.out.println(companiesService.isCompanyExist("osem@company.com", "1234"));
 
 //			CheckTitle.printTestLine("!WRONG! check if company exist");// Should return false
 //			System.out.println(companiesDBDAO.isCompanyExists("osem111@company.com", "1234"));
