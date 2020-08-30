@@ -52,7 +52,7 @@ public class CompaniesServiceTest implements CommandLineRunner {
 		c2.setPassword("4321");
 		c2.setEmail("samsung1111@company.com");
 		companiesService.updateCompany(c2);
-		CheckTitle.printOneCompany(companiesService.getOneCompany(2));
+		CheckTitle.printOneCompany(companiesService.getOneCompany1(2));
 
 		CheckTitle.printTestLine("delete company");
 		companiesService.deleteCompany(c1);
@@ -62,7 +62,7 @@ public class CompaniesServiceTest implements CommandLineRunner {
 		CheckTitle.printCompaniesTable(companiesService.getAllCompanies());
 
 		CheckTitle.printTestLine("get one comapany");
-		CheckTitle.printOneCompany(companiesService.getOneCompany(2));
+		CheckTitle.printOneCompany(companiesService.getOneCompany1(2));
 
 		CheckTitle.separatorLine();
 

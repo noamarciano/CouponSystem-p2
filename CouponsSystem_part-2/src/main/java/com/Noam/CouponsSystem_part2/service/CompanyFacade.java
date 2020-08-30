@@ -3,7 +3,6 @@ package com.Noam.CouponsSystem_part2.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Noam.CouponsSystem_part2.beans.Category;
@@ -16,19 +15,15 @@ import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 import lombok.Setter;
 
 @Service
+//@Scope("prototype")
+@Setter
 public class CompanyFacade extends ClientFacade {
 
-	@Setter
 	private int companyID;
 
-	@Autowired
-	private CompaniesService companiesService;
-
-//	@Autowired
-//	private CustomersService customersService;
-
-	@Autowired
-	private CouponsService couponsService;
+	public CompanyFacade() {
+		super();
+	}
 
 	@Override
 	public boolean login(String email, String password) throws LoginDeniedException {
@@ -59,7 +54,7 @@ public class CompanyFacade extends ClientFacade {
 		List<Coupon> coupons = couponsService.getAllCoupons();
 		for (Coupon c : coupons) {
 			if (c.getId() == couponID) {
-//				couponsService.deleteCouponPurchaseByCouponID(couponID);
+				couponsService.deleteCouponPurchase(couponID);
 				couponsService.deleteCouponById(couponID);
 				return;
 			}
@@ -99,7 +94,7 @@ public class CompanyFacade extends ClientFacade {
 	}
 
 	public Company getCompanyDetails() {
-		Company company = companiesService.getOneCompany(companyID);
+		Company company = companiesService.getOneCompany1(companyID);
 		try {
 			company.setCoupons(getCompanyCoupons());
 			return company;

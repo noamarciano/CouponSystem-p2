@@ -4,7 +4,6 @@ public class NoSuchThingLikeThisException extends Exception {
 
 	public NoSuchThingLikeThisException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 }

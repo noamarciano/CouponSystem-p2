@@ -59,7 +59,6 @@ public class AdminFacade extends ClientFacade {
 		List<Company> companies = companiesService.getAllCompanies();
 		for (Coupon c : coupons) {
 			if (coupons != null) {
-//				couponsService.deleteCouponPurchaseByCouponID(c.getId());
 				couponsService.deleteCoupon(c);
 			}
 		}
@@ -77,13 +76,12 @@ public class AdminFacade extends ClientFacade {
 		return companiesService.getAllCompanies();
 	}
 
-	public Company getOneCompany(int companyID) throws NoSuchThingLikeThisException {
-		if (companiesService.getOneCompany(companyID) != null) {
-			return companiesService.getOneCompany(companyID);
-		} else {
-			System.out.println("This company doesn't exist..");
-		}
-		throw new NoSuchThingLikeThisException("Sorry, There is no company with id : " + companyID);
+	public Optional<Company> getOneCompany(int companyID) throws NoSuchThingLikeThisException {
+		return companiesService.getOneCompany(companyID);
+	}
+	
+	public Company getOneCompany1(int companyID) {
+		return companiesService.getOneCompany1(companyID);
 	}
 
 	public void addCustomer(Customer customer) throws AlreadyExistException {
@@ -96,26 +94,25 @@ public class AdminFacade extends ClientFacade {
 		customersService.addCustomer(customer);
 	}
 
-	public void updateCustomer(Customer customer) {
+	public void updateCustomer(Customer customer) throws CannotUpdateException {
+		if (customersService.getOneCustomer(customer.getId()) == null) {
+			throw new CannotUpdateException("customer doesn't exist");
+		}
 		customersService.updateCustomer(customer);
 	}
 
-//	public void deleteCustomer(int customerID) {
-//		List<Coupon> coupons = couponsService.getAllCoupons();
-//		for (Coupon c : coupons) {
-//			if (c.getCompanyID() == customerID) {
-//				couponsService.deleteCoupon(c);
-//				couponsService.deleteCouponPurchaseByCouponID(c.getId());;
-//			}
-//		}
-//		customersService.deleteCustomer(customerID);
-//	}
+	public void deleteCustomer(int customerID) throws NoSuchThingLikeThisException {
+		if (customersService.getOneCustomer(customerID) == null) {
+			throw new NoSuchThingLikeThisException("customer doesn't exist");
+		}
+		customersService.deleteCustomerByID(customerID);
+	}
 
 	public List<Customer> getAllCustomers() {
 		return customersService.getAllCustomers();
 	}
 
-	public Optional<Customer> getOneCustomer(int customerID) {
+	public Optional<Customer> getOneCustomer(int customerID) throws NoSuchThingLikeThisException {
 		if (customersService.getOneCustomer(customerID) != null) {
 			return customersService.getOneCustomer(customerID);
 		} else {

@@ -1,6 +1,7 @@
 package com.Noam.CouponsSystem_part2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,12 @@ public class CompaniesService {
 		return repo.findAll();
 	}
 
-	public Company getOneCompany(int id) {
-		return repo.getOne(id);
+	public Optional<Company> getOneCompany(int id) {
+		return repo.findById(id);
+	}
+	
+	public Company getOneCompany1(int id) {
+	return repo.getOne(id);
 	}
 
 	public Company isCompanyExist(String email, String password) {

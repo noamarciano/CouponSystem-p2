@@ -27,12 +27,20 @@ public class CustomersService {
 		repo.delete(customer);
 	}
 
+	public void deleteCustomerByID(int customerID) {
+		repo.deleteById(customerID);
+	}
+
 	public List<Customer> getAllCustomers() {
 		return repo.findAll();
 	}
 
 	public Optional<Customer> getOneCustomer(int id) {
 		return repo.findById(id);
+	}
+
+	public Customer getOneCustomer1(int id) {
+		return repo.getOne(id);
 	}
 
 	public Customer isCustomerExist(String email, String password) {

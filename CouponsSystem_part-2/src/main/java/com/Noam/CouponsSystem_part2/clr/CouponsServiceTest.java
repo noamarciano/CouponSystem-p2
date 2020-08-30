@@ -1,7 +1,5 @@
 package com.Noam.CouponsSystem_part2.clr;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -80,7 +78,7 @@ public class CouponsServiceTest implements CommandLineRunner {
 		CheckTitle.printTestLine("get one coupon");
 		CheckTitle.printOneCoupon(couponsService.getOneCoupon(2));
 		System.out.println();
-
+		
 		CheckTitle.separatorLine();
 
 	}

@@ -46,12 +46,9 @@ public class CustomersServiceTest implements CommandLineRunner {
 		customersService.addCustomer(cu3);
 		CheckTitle.printCustomersTable(customersService.getAllCustomers());
 
-		CheckTitle.printTestLine("check if customer exist");// Should return true
+		CheckTitle.printTestLine("check if customer exist");
 		System.out.println(customersService.isCustomerExist("koby@gmail.com", "1234"));
-////
-////			CheckTitle.printTestLine("!WRONG! check if customer exist");//// Should return false
-////			System.out.println(customersDBDAO.isCustomerExists("koby@gmail.com", "1111"));
-//
+
 		CheckTitle.printTestLine("update customer");
 		cu2.setPassword("4321");
 		cu2.setFirstName("Eliyahu");

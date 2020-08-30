@@ -161,8 +161,9 @@ public class CheckTitle {
 			System.out.printf("%10s %10s %10s %20s %10s %10s", "id", "first", "last", "email", "password", "coupons");
 			System.out.println();
 			CheckTitle.sepLine();
-			System.out.printf("%10s %10s %10s %20s %10s %10s", (optional).get().getId(), (optional).get().getFirstName(),
-					(optional).get().getLastName(), (optional).get().getEmail(), (optional).get().getPassword(), (optional).get().getCoupons());
+			System.out.printf("%10s %10s %10s %20s %10s %10s", (optional).get().getId(),
+					(optional).get().getFirstName(), (optional).get().getLastName(), (optional).get().getEmail(),
+					(optional).get().getPassword(), (optional).get().getCoupons());
 			System.out.println();
 		}
 	}

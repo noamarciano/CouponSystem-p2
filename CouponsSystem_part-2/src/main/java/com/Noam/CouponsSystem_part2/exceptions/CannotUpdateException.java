@@ -4,7 +4,6 @@ public class CannotUpdateException extends Exception {
 
 	public CannotUpdateException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 }

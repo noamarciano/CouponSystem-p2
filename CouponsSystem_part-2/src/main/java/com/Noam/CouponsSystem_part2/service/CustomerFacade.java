@@ -15,14 +15,14 @@ import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 import com.Noam.CouponsSystem_part2.exceptions.PurchasedCouponException;
 import com.Noam.CouponsSystem_part2.repo.CustomerRepository;
 
+import lombok.Setter;
+
 @Service
+//@Scope("prototype")
+@Setter
 public class CustomerFacade extends ClientFacade {
 
 	private int customerID;
-
-	public void setCustomerID(int customerID) {
-		this.customerID = customerID;
-	}
 
 	@Autowired
 	private CompaniesService companiesService;
@@ -53,19 +53,14 @@ public class CustomerFacade extends ClientFacade {
 		}
 
 		// You can't purchase coupon more than once
-		Optional<Customer> customer = customersService.getOneCustomer(customerID);
-		List<Coupon> coupons = customer.get().getCoupons();
-		if (coupons != null) {
-			for (Coupon c : coupons) {
-				if (coupon.getId() == c.getId()) {
-					throw new PurchasedCouponException("Coupon already purchased by this customer");
-				}
-			}
+
+		if (getCustomerCoupons().contains(coupon)) {
+			throw new PurchasedCouponException("Coupon already purchased by this customer");
 		}
 
 		// You can't purchase coupon when amount=0
 
-		if (coupon.getAmount() <= 0) {
+		if (coupon.getAmount() == 0) {
 			throw new PurchasedCouponException("Sorry, Coupon amount is less then 1");
 		}
 
@@ -73,9 +68,7 @@ public class CustomerFacade extends ClientFacade {
 		if (coupon.getEndDate().before(new Date())) {
 			throw new PurchasedCouponException("You can't purchase coupon when date is expired");
 		}
-//		System.out.println(couponFromDB);
 		coupon.setAmount(coupon.getAmount() - 1);
-//		System.out.println(couponFromDB);
 		couponsService.updateCoupon(coupon);
 		couponsService.addCouponPurchase(customerID, coupon.getId());
 
@@ -91,9 +84,7 @@ public class CustomerFacade extends ClientFacade {
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) {// TODO need to throw exception + maxPrice
-																				// + ID
-
+	public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) {
 		List<Coupon> couponsByCategory = new ArrayList<>();
 		try {
 			Optional<Customer> customer = customersService.getOneCustomer(customerID);

@@ -1,5 +1,7 @@
 package com.Noam.CouponsSystem_part2.clr;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -10,6 +12,7 @@ import com.Noam.CouponsSystem_part2.beans.Customer;
 import com.Noam.CouponsSystem_part2.exceptions.AlreadyExistException;
 import com.Noam.CouponsSystem_part2.exceptions.CannotUpdateException;
 import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
+import com.Noam.CouponsSystem_part2.exceptions.NoSuchThingLikeThisException;
 import com.Noam.CouponsSystem_part2.security.ClientType;
 import com.Noam.CouponsSystem_part2.security.LoginManager;
 import com.Noam.CouponsSystem_part2.service.AdminFacade;
@@ -21,7 +24,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 
 	@Autowired
 	AdminFacade adminFacade;
-	
+
 	@Autowired
 	LoginManager loginManager;
 
@@ -29,7 +32,6 @@ public class AdminFacadeTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		CheckTitle.adminFacadeCheck();
-		
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! login test");
 		try {
@@ -44,8 +46,6 @@ public class AdminFacadeTest implements CommandLineRunner {
 		} catch (LoginDeniedException e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
 
 		CheckTitle.printTestLine("Admin Facade - add companies");
 
@@ -60,7 +60,6 @@ public class AdminFacadeTest implements CommandLineRunner {
 			c2.setName("Herodes");
 			c2.setEmail("herodes@company.com");
 			c2.setPassword("1234");
-			
 
 			adminFacade.addCompany(c1);
 			adminFacade.addCompany(c2);
@@ -69,7 +68,6 @@ public class AdminFacadeTest implements CommandLineRunner {
 		} catch (AlreadyExistException e) {
 			System.out.println(e.getMessage());
 		}
-
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! add companies");
 		Company c6 = new Company();
@@ -93,7 +91,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 		CheckTitle.printTestLine("Admin Facade - update company");
 
 		try {
-			Company company = adminFacade.getOneCompany(4);
+			Company company = adminFacade.getOneCompany1(4);
 
 			company.setEmail("hilton123@company.com");
 			company.setPassword("9876");
@@ -101,12 +99,11 @@ public class AdminFacadeTest implements CommandLineRunner {
 		} catch (CannotUpdateException e2) {
 			System.out.println(e2.getMessage());
 		}
-		CheckTitle.printOneCompany(adminFacade.getOneCompany(4));
-
+		CheckTitle.printOneCompany(adminFacade.getOneCompany1(4));
 
 		CheckTitle.printTestLine("Admin Facade - !WRONG! update company");
 		try {
-			Company company = adminFacade.getOneCompany(4);
+			Company company = adminFacade.getOneCompany1(4);
 			company.setName("New Hilton");
 			company.setId(123);
 
@@ -171,6 +168,23 @@ public class AdminFacadeTest implements CommandLineRunner {
 		}
 		CheckTitle.printCustomersTable(adminFacade.getAllCustomers());
 
+		CheckTitle.printTestLine("Admin Facae - update customer");
+		try {
+			cu6.setEmail("rut123@gmail.com");
+			cu6.setPassword("4321");
+			adminFacade.updateCustomer(cu6);
+		} catch (CannotUpdateException e) {
+			System.out.println(e.getMessage());
+		}
+		CheckTitle.printCustomersTable(adminFacade.getAllCustomers());
+
+		CheckTitle.printTestLine("Admin Facae - delete customer");
+		try {
+			adminFacade.deleteCustomer(5);
+		} catch (NoSuchThingLikeThisException e) {
+			System.out.println(e.getMessage());
+		}
+		CheckTitle.printCustomersTable(adminFacade.getAllCustomers());
 		CheckTitle.printTestLine("Admin Facae - get all companies");
 		CheckTitle.printCompaniesTable(adminFacade.getAllCompanies());
 
@@ -178,16 +192,10 @@ public class AdminFacadeTest implements CommandLineRunner {
 		CheckTitle.printCustomersTable(adminFacade.getAllCustomers());
 
 		CheckTitle.printTestLine("Admin Facade - get one company");
-		CheckTitle.printOneCompany(adminFacade.getOneCompany(4));
-
-		CheckTitle.printTestLine("Admin Facade - !WRONG! get one company");
-//		CheckTitle.printOneCompany(adminFacade.getOneCompany(9));//TODO need to fix the wrong
+		CheckTitle.printOneCompany(adminFacade.getOneCompany1(4));
 
 		CheckTitle.printTestLine("Admin Facade - get one customer");
 		CheckTitle.printOneCustomer(adminFacade.getOneCustomer(2));
-
-		CheckTitle.printTestLine("Admin Facade - !WRONG! get one customer");
-//		CheckTitle.printOneCustomer(adminFacade.getOneCustomer(20));TODO need to fix the wrong
 
 		CheckTitle.separatorLine();
 

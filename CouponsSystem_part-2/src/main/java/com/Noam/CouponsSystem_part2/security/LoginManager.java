@@ -1,7 +1,7 @@
 package com.Noam.CouponsSystem_part2.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.Noam.CouponsSystem_part2.exceptions.LoginDeniedException;
 import com.Noam.CouponsSystem_part2.service.AdminFacade;
@@ -9,7 +9,7 @@ import com.Noam.CouponsSystem_part2.service.ClientFacade;
 import com.Noam.CouponsSystem_part2.service.CompanyFacade;
 import com.Noam.CouponsSystem_part2.service.CustomerFacade;
 
-@Component
+@Service
 public class LoginManager {
 
 	@Autowired

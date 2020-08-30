@@ -19,32 +19,32 @@ import com.Noam.CouponsSystem_part2.service.CustomersService;
 @RequestMapping("customer")
 public class CustomersController {
 
-//	@Autowired
-//	CustomersService customersService;
-//
-//	@PostMapping("add")
-//	public ResponseEntity<?> addCustomer(Customer customer) {
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	@PutMapping("update")
-//	public ResponseEntity<?> updateCustomer(Customer customer) {
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	@DeleteMapping("delete")
-//	public ResponseEntity<?> deleteCustomer(Customer customer) {
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	@GetMapping("get-all")
-//	public ResponseEntity<?> getAllCustomers() {
-//		return new ResponseEntity<List<Customer>>(customersService.getAllCustomers(), HttpStatus.OK);
-//	}
-//
-//	@GetMapping("get-one")
-//	public ResponseEntity<?> getOneCustomer(int id) {
-//		return new ResponseEntity<Customer>(customersService.getOneCustomer(id), HttpStatus.OK);
-//	}
+	@Autowired
+	CustomersService customersService;
+
+	@PostMapping("add")
+	public ResponseEntity<?> addCustomer(Customer customer) {
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@PutMapping("update")
+	public ResponseEntity<?> updateCustomer(Customer customer) {
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@DeleteMapping("delete")
+	public ResponseEntity<?> deleteCustomer(Customer customer) {
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@GetMapping("get-all")
+	public ResponseEntity<?> getAllCustomers() {
+		return new ResponseEntity<List<Customer>>(customersService.getAllCustomers(), HttpStatus.OK);
+	}
+
+	@GetMapping("get-one")
+	public ResponseEntity<?> getOneCustomer(int id) {
+		return new ResponseEntity<Customer>(customersService.getOneCustomer1(id), HttpStatus.OK);
+	}
 
 }

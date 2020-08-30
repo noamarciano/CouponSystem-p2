@@ -45,7 +45,7 @@ public class CompaniesController {
 
 	@GetMapping("get-one")
 	public ResponseEntity<?> getOneCompany(int id) {
-		return new ResponseEntity<Company>(companiesService.getOneCompany(id), HttpStatus.OK);
+		return new ResponseEntity<Company>(companiesService.getOneCompany1(id), HttpStatus.OK);
 	}
 
 }

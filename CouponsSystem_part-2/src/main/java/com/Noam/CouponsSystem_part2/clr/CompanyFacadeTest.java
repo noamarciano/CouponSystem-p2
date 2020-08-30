@@ -16,6 +16,7 @@ import com.Noam.CouponsSystem_part2.security.LoginManager;
 import com.Noam.CouponsSystem_part2.service.CompanyFacade;
 import com.Noam.CouponsSystem_part2.service.CouponsService;
 import com.Noam.CouponsSystem_part2.utils.CheckTitle;
+import com.Noam.CouponsSystem_part2.utils.DateUtils;
 
 @Component
 @Order(5)
@@ -35,24 +36,25 @@ public class CompanyFacadeTest implements CommandLineRunner {
 
 		CheckTitle.companyFacadeCheck();
 
-//		CheckTitle.printTestLine("Company Facade - !WRONG! login test");
-//		try {
-//			loginManager.login("burger@company.com", "1234", ClientType.Company);
-//		} catch (LoginDeniedException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
-		CheckTitle.printTestLine("Company Facade - Real login test");
 		CompanyFacade burgerKingCompany = null;
+
+		CheckTitle.printTestLine("Company Facade - !WRONG! login test");
+		try {
+			burgerKingCompany = (CompanyFacade) loginManager.login("burger@company.com", "1234", ClientType.Company);
+		} catch (LoginDeniedException e) {
+			System.out.println(e.getMessage());
+		}
+
+		CheckTitle.printTestLine("Company Facade - Real login test");
+		burgerKingCompany = null;
 		try {
 			burgerKingCompany = (CompanyFacade) loginManager.login("burgerking@company.com", "1234",
 					ClientType.Company);
 		} catch (LoginDeniedException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		burgerKingCompany.setCompanyID(3);
-		
 
 		CheckTitle.printTestLine("Company Facade - add coupons");
 
@@ -73,7 +75,7 @@ public class CompanyFacadeTest implements CommandLineRunner {
 		cou5.setTitle("Free fries");
 		cou5.setDescription("buy a meal and get fries for FREE!");
 		cou5.setStartDate(new Date(2019, 06, 10));
-		cou5.setEndDate(new Date(2020, 07, 11));
+		cou5.setEndDate(new Date(2021, 07, 11));
 		cou5.setAmount(70);
 		cou5.setPrice(49.9);
 		cou5.setImage("img.com");
@@ -125,8 +127,8 @@ public class CompanyFacadeTest implements CommandLineRunner {
 
 			coupon.setTitle("FreeFries");
 			coupon.setDescription("buy a meal and get fries");
-			coupon.setStartDate(new Date(2019, 03, 11));
-			coupon.setEndDate(new Date(2019, 10, 12));
+			coupon.setStartDate(DateUtils.convertUtilDateToSQL(new Date(2020, 1, 1)));
+			coupon.setEndDate(DateUtils.convertUtilDateToSQL(new Date(2020, 2, 2)));
 			coupon.setAmount(40);
 			coupon.setPrice(59.9);
 			coupon.setImage("img.comm");
